@@ -1,14 +1,13 @@
+import React, {useState} from 'react';
 import Expenses from './components/Expenses/Expenses'
 import NewExpense from './components/NewExpense/NewExpense';
 
-
-const App = () => {
-   const dummy_expenses = [
+const DUMMY= [
   {
     id: "e1",
     title: "Toilet Paper",
     amount: 94.12,
-    date: new Date(2020, 7, 14),
+    date: new Date(2022, 7, 14),
   },
   {
     id: "e2",
@@ -22,22 +21,26 @@ const App = () => {
     amount: 294.67,
     date: new Date(2021, 2, 28),
   },
-  {
-    id: "e4",
-    title: "New Desk (Wooden)",
-    amount: 450,
-    date: new Date(2021, 5, 12),
-  },
+    //{
+    //  id: "e4",
+    //  title: "New Desk (Wooden)",
+    //  amount: 450,
+    //  date: new Date(2021, 5, 12),
+    //},
 ]
+const App = () => {
+    const [expenses, setExpenses] = useState(DUMMY);
 
-    const addExpenseHandler = expense => {
-        console.log("In app.js");
-        console.log(expense);
-    }
+    const addExpenseHandler = (expense) => {
+        //setExpenses([expense, ...expenses]) // this is wrong because it will not update the state
+        setExpenses((prevExpenses) => {
+            return [expense, ...prevExpenses];
+        });
+    };
     return (
       <div>
-        <NewExpense onAddEpense = {addExpenseHandler} />
-        <Expenses items = {dummy_expenses}/>
+        <NewExpense onAddExpense = {addExpenseHandler} />
+        <Expenses items = {expenses}/>
       </div>
   );
 }
